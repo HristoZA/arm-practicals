@@ -7,7 +7,7 @@ message1: .asciz "Hey, type a number: "
  
 /* Second message */
 .balign 4
-message2: .asciz "I read the number %d\n"
+message2: .asciz "Bad Temp: %d\n"
  
 /* Format pattern for scanf */
 .balign 4
@@ -34,10 +34,18 @@ main:
     ldr r1, address_of_number_read   /* r1 ← &number_read */
     bl scanf                         /* call to scanf */
  
-    ldr r0, address_of_message2      /* r0 ← &message2 */
+    @ldr r0, address_of_message2      /* r0 ← &message2 */
     ldr r1, address_of_number_read   /* r1 ← &number_read */
     ldr r1, [r1]                     /* r1 ← *r1 */
-    bl printf                        /* call to printf */
+    @bl printf                        /* call to printf */
+    
+    cmp r1, #10
+    blt end
+     
+    end:
+        lr r0, address_of_message2
+        printf
+    
  
     ldr r0, address_of_number_read   /* r0 ← &number_read */
     ldr r0, [r0]                     /* r0 ← *r0 */
