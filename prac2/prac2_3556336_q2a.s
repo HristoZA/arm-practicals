@@ -1,3 +1,7 @@
+.global printf
+
+ouput: .asciz "The 11th fibonacci number is %d\n"
+
 .global main
 main:
 
@@ -19,4 +23,5 @@ main:
 
 end:
 	mov r0, r1
+	bl printf
 	bx lr
