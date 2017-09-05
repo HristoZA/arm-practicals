@@ -1,87 +1,127 @@
-.data
+data
 
+/*Message1 */
 .balign 4
-prompt: .asciz "Please enter the temprature: "
+message1: .asciz "Enter a string: "
 
+/* Message 2 */
 .balign 4
-error_message: .asciz "Bad input. Please ensure your input is between 10 and 100 degrees\n"
+message2: .asciz "Your string has a length of %d\n"
 
+/* Message 3 */
 .balign 4
-msg_shorts: .asciz "Wear Shorts\n"
+message3: .asciz "Your string is '%s'.\n"
 
+/* format for scanf */
 .balign 4
-msg_pants: .asciz "Wear pants and get some excerise.\n"
+pattern: .asciz "%s"
 
+/*Where we will store the length of the string */
 .balign 4
-temp: .word 0
+strLen: .word 0
 
+/*where scanf will store the string */
 .balign 4
-pattern: .asciz "%d"
+string: .lcomm string, 128
 
+/*Return value */
 .balign 4
-lr_bu: .word 0
+return: .word 0
 
+/* Text Section */
 .text
+
+end:
+        ldr lr, add_of_return /*load in the return address to lr */
+        ldr lr, [lr] /* load the value at the address lr into lr */
+        bx lr  /* branch exchange (basically end the program) */
+
+add_of_return: .word return
+
+calcStrLen:
+        /*load in the first character to reg 2
+          compare it to 0 and branch to label
+          'done' if the two are the same */
+
+        ldr r2, [r1]
+        beq done
+
+        /* increment the counter (r0) and the
+           string pointer (r1) */
+        add r0, r0, #1
+        add r1, r1, #1
+
+        /* store counter value into strLen */
+           str r0, [r3]
+
+        /* branch back to top of 'calcStrLen' */
+           b calcStrLen
+
+done:
+        /* load the address of strLen to reg 1
+           and then get the value at reg 1 and
+           store it into reg 1 */
+        ldr r1, add_of_strLen
+        ldr r1, [r1]
+
+        /* load in the address of message2 into
+           reg 0 */
+        ldr r0, add_of_message2
+
+        /* print */
+        bl printf
+
+        /* branch to label 'end' */
+        b end
+
 .global main
-.func main
 
 main:
+        /* load return address into reg 1
+           and then get the value at the
+           address and store it into reg 1 */
+        ldr r1, add_of_return
+        str lr, [r1]
 
- ldr r1, adr_lr_bu
- str lr, [r1]
+        /* load address of message1 into reg 0
+           and then print message1 */
+        ldr r0, add_of_message1
+        bl printf
 
- ldr r0, adr_prompt
- bl printf 
+        /* load in the necessary elements to
+           scan in a string from the user */
+        ldr r0, add_of_pattern
+        ldr r1, add_of_string
+        bl scanf
 
- ldr r0, adr_pattern
- ldr r1, adr_temp
- bl scanf
+        /* prints the string given by the user */
+        ldr r0, add_of_message3
+        ldr r1, add_of_string
+        bl printf
 
- ldr r1, adr_temp
- ldr r1, [r1]
+        /* load in the address of the user's string */
+        ldr r1, add_of_string
 
- cmp r1, #10
- bgt good
- blt bad
+        /*load in the address of strLen, then
+          go to the address and store the value
+          into r0 */
+        ldr r0, add_of_strLen
+        ldr r0, [r0]
 
- bad: 
-  ldr r0, adr_error_message
-  bl printf
-  b end
+        /* store strLen's address in reg 3 */
+        ldr r3, add_of_strLen
 
- good:
-  cmp r1, #100
-  bgt bad
-  
-  cmp r1, #40
-  blt shorts
-  bgt pants
-  b end
+        /* branch to label 'calcStrLen' */
+        bl calcStrLen
 
- shorts:
+/*Definitions of address values used */
+add_of_message1: .word message1
+add_of_message2: .word message2
+add_of_message3: .word message3
+add_of_pattern: .word pattern
+add_of_string: .word string
+add_of_strLen: .word strLen
 
-  ldr r0, adr_msg_shorts
-  bl printf
-  b end
-
- pants:
-  ldr r0, adr_msg_pants
-  bl printf
-  b end
-
- end: 
-
-  ldr lr, adr_lr_bu
-  ldr lr, [lr]
-  bx lr
-
- adr_prompt : .word prompt
- adr_temp : .word temp
- adr_error_message: .word error_message
- adr_msg_shorts: .word msg_shorts
- adr_msg_pants: .word msg_pants
- adr_pattern : .word pattern
- adr_lr_bu: .word lr_bu
-
+/* external */
 .global printf
-.global scanf
+.global scanf     
