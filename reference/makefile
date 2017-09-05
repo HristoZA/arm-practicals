@@ -1,10 +1,10 @@
-test: test.o
-	gcc -o test test.o
-test.o: test.s
-	as -o test.o test.s
+rename: rename.o
+	gcc -o rename rename.o
+rename.o: rename.s
+	as -o rename.o rename.s
 clean:
-	rm *.o test
+	rm *.o rename
 debug: 
-	as -g -o test.o test.s
-	gcc -o test test.o    
-	gdb test
+	as -g -o rename.o rename.s
+	gcc -o rename rename.o    
+	gdb rename
