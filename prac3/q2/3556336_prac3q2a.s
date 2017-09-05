@@ -1,56 +1,127 @@
-/* -- printf01.s */
 .data
 
+.equ add, 1
+.equ subtract, 2
+.equ factorial, 3
+
 .balign 4
-message1: .asciz "Hey, type a number: "
- 
+prompt_num: .asciz "Please enter a number: "
+
 .balign 4
-message2: .asciz "I read the number %s\n"
- 
+prompt_op: .asciz "\nPlease chose an operation add, subtract, factorial: "
+
 .balign 4
-scan_pattern : .asciz " "m
- 
+output: .asciz "\n number rep: %s\n"
+
 .balign 4
-number_read: .word 0
- 
+error_msg: .asciz "\nYour operator was invalid!\n"
+
 .balign 4
-return: .word 0
- 
+pattern: .asciz "%d"
+
+.balign 4
+pattern_string: .asciz "%s"
+
+.balign 4
+num1: .word 0
+
+.balign 4
+num2: .word 0
+
+.balign 4
+op: .space 128
+
+.balign 4
+lr_bu: .word 0
+
+.balign 4
+str_add: .string "add"
 .text
- 
 .global main
-main:
+.func main
+main: 
+	@Make backup of link register
+	ldr r1, adr_lr_bu
+	str lr, [r1]
+	
+	@prompt for number
+	ldr r0, adr_prompt_num
+	bl printf
+	
+	@scan for first num and save to adr_num1
+	ldr r0, adr_pattern
+	ldr r1, adr_num1
+	bl scanf
+	
+	@prompt for number
+	ldr r0, adr_prompt_num
+	bl printf
 
-    ldr r1, adr_return        /* r1 ← &adr_return */
-    str lr, [r1]                     /* *r1 ← lr */
- 
-    ldr r0, adr_message1      /* r0 ← &message1 */
-    bl printf                        /* call to printf */
- 
-    ldr r0, adr_scan_pattern  /* r0 ← &scan_pattern */
-    ldr r1, adr_number_read   /* r1 ← &number_read */
-    bl scanf                         /* call to scanf */
- 
-    ldr r0, adr_message2      /* r0 ← &message2 */
-    ldr r1, adr_number_read   /* r1 ← &number_read */
-    ldr r1, [r1]                     /* r1 ← *r1 */
-    bl printf                        /* call to printf */
- 
-    ldr r2, adr_number_read   /* r0 ← &number_read */
-    ldr r2, [r2]                     /* r0 ← *r0 */
+	@scan for second num and save to adr_num2
+	ldr r0, adr_pattern
+	ldr r1, adr_num2
+	bl scanf
+	
+	@Move values into r2 and r3
+	ldr r2, adr_num1
+	ldr r2, [r2]
+	ldr r3, adr_num2
+	ldr r3, [r3]
+	
+	@prompt for operation
+	ldr r0, adr_prompt_op
+	bl printf
+	
+	@scan for op and save to adr_op
+	ldr r0, adr_pattern_string
+	ldr r1, adr_op
+	bl scanf	
+		
+	mov r1, r1
+	cmp r1, #1
+	beq add_vals
+	@cmp r1, #2
+	@beq sub_vals
+	@cmp r1, #3
+	@beq fact_vals
+	b error
+	
+	add_vals:
+		ldr r3, adr_num1
+		ldr r3, [r3]
+		
+		ldr r4, adr_num2
+		ldr r4, [r4]
+		
+		ldr r0, adr_output
+		add r1, r3, r4
+		bl printf
+		
+		b end	
+		
+	error:
+		ldr r0, adr_error_msg
+		bl printf
+		b end	
+	
+		
+	end:
+		@Restore Link Register
+		ldr lr, adr_lr_bu
+		ldr lr, [lr]
+		bx lr
 
+adr_num1: .word num1
+adr_num2: .word num2
+adr_op: .word op
+adr_str_add: .word str_add
+adr_prompt_num: .word prompt_num
+adr_prompt_op: .word prompt_op
+adr_output: .word output
+adr_error_msg: .word error_msg
+adr_pattern: .word pattern
+adr_pattern_string: .word pattern_string
+adr_lr_bu: .word lr_bu
 
- 
-    ldr lr, adr_return        /* lr ← &adr_return */
-    ldr lr, [lr]                     /* lr ← *lr */
-    bx lr                            /* return from main using lr */
-
-adr_message1 : .word message1
-adr_message2 : .word message2
-adr_scan_pattern : .word scan_pattern
-adr_number_read : .word number_read
-adr_return : .word return
- 
-/* External */
-.global printf
 .global scanf
+.global printf
