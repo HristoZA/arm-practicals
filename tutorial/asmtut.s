@@ -1,4 +1,4 @@
-data
+.data
 
 /*Message1 */
 .balign 4
@@ -22,7 +22,7 @@ strLen: .word 0
 
 /*where scanf will store the string */
 .balign 4
-string: .lcomm string, 128
+.lcomm string, 128
 
 /*Return value */
 .balign 4
