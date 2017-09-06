@@ -1,127 +1,97 @@
 .data
 
-/*Message1 */
 .balign 4
-message1: .asciz "Enter a string: "
+prompt_num: .asciz "Please enter a number: "
 
-/* Message 2 */
 .balign 4
-message2: .asciz "Your string has a length of %d\n"
+prompt_op: .asciz "\nPlease chose an operation add, subtract, factorial: "
 
-/* Message 3 */
 .balign 4
-message3: .asciz "Your string is '%s'.\n"
+output: .asciz "\n number rep: %d\n"
 
-/* format for scanf */
 .balign 4
-pattern: .asciz "%s"
+error_msg: .asciz "\nYour operator was invalid!\n"
 
-/*Where we will store the length of the string */
 .balign 4
-strLen: .word 0
+pattern: .asciz "%d"
 
-/*where scanf will store the string */
 .balign 4
-.lcomm string, 128
+pattern_string: .asciz "%s"
 
-/*Return value */
 .balign 4
-return: .word 0
+num1: .word 0
 
-/* Text Section */
+.balign 4
+num2: .word 0
+
+.balign 4
+op: .space 128
+
+.balign 4
+lr_bu: .word 0
+
+.balign 4
+str_add: .string "add"
 .text
 
-end:
-        ldr lr, add_of_return /*load in the return address to lr */
-        ldr lr, [lr] /* load the value at the address lr into lr */
-        bx lr  /* branch exchange (basically end the program) */
-
-add_of_return: .word return
-
-calcStrLen:
-        /*load in the first character to reg 2
-          compare it to 0 and branch to label
-          'done' if the two are the same */
-
-        ldr r2, [r1]
-        beq done
-
-        /* increment the counter (r0) and the
-           string pointer (r1) */
-        add r0, r0, #1
-        add r1, r1, #1
-
-        /* store counter value into strLen */
-           str r0, [r3]
-
-        /* branch back to top of 'calcStrLen' */
-           b calcStrLen
-
-done:
-        /* load the address of strLen to reg 1
-           and then get the value at reg 1 and
-           store it into reg 1 */
-        ldr r1, add_of_strLen
-        ldr r1, [r1]
-
-        /* load in the address of message2 into
-           reg 0 */
-        ldr r0, add_of_message2
-
-        /* print */
-        bl printf
-
-        /* branch to label 'end' */
-        b end
-
+add_vals:
+	push {ip, lr}
+	
+	add r0, r0, r1
+	
+	pop {ip, pc}
+	bx lr
+	
 .global main
+.func main
+main: 
+	push {ip, lr}
+	
+	@prompt for number
+	ldr r0, adr_prompt_num
+	bl printf
+	
+	@scan for first num and save to adr_num1
+	ldr r0, adr_pattern
+	ldr r1, adr_num1
+	bl scanf
+	
+	@prompt for number
+	ldr r0, adr_prompt_num
+	bl printf
 
-main:
-        /* load return address into reg 1
-           and then get the value at the
-           address and store it into reg 1 */
-        ldr r1, add_of_return
-        str lr, [r1]
+	@scan for second num and save to adr_num2
+	ldr r0, adr_pattern
+	ldr r1, adr_num2
+	bl scanf
+	
+	@Move values into r2 and r3
+	ldr r0, adr_num1
+	ldr r0, [r0]
+	ldr r1, adr_num2
+	ldr r1, [r1]
+	
+	bl add_vals
+	mov r1, r0
+	ldr r0, adr_output
+	bl printf
+		
+	end:
+		@Restore Link Register
+		pop {ip, pc}
+		bx lr
 
-        /* load address of message1 into reg 0
-           and then print message1 */
-        ldr r0, add_of_message1
-        bl printf
+adr_num1: .word num1
+adr_num2: .word num2
+adr_op: .word op
+adr_str_add: .word str_add
+adr_prompt_num: .word prompt_num
+adr_prompt_op: .word prompt_op
+adr_output: .word output
+adr_error_msg: .word error_msg
+adr_pattern: .word pattern
+adr_pattern_string: .word pattern_string
+adr_lr_bu: .word lr_bu
 
-        /* load in the necessary elements to
-           scan in a string from the user */
-        ldr r0, add_of_pattern
-        ldr r1, add_of_string
-        bl scanf
-
-        /* prints the string given by the user */
-        ldr r0, add_of_message3
-        ldr r1, add_of_string
-        bl printf
-
-        /* load in the address of the user's string */
-        ldr r1, add_of_string
-
-        /*load in the address of strLen, then
-          go to the address and store the value
-          into r0 */
-        ldr r0, add_of_strLen
-        ldr r0, [r0]
-
-        /* store strLen's address in reg 3 */
-        ldr r3, add_of_strLen
-
-        /* branch to label 'calcStrLen' */
-        bl calcStrLen
-
-/*Definitions of address values used */
-add_of_message1: .word message1
-add_of_message2: .word message2
-add_of_message3: .word message3
-add_of_pattern: .word pattern
-add_of_string: .word string
-add_of_strLen: .word strLen
-
-/* external */
+.global scanf
 .global printf
-.global scanf     
