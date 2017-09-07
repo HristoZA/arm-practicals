@@ -16,8 +16,8 @@ There are multiple ways to write to the screen in arm assembly. The first method
 ### With System Interupts 
 
     @ Hello World
-	.global _start
-	_start:
+	.global main
+	main:
 		MOV R7, #4 @ Syscall to output to screen
 		MOV R0,  #1 @ Monitor output stream
 		MOV R2, #12 @ String Length
@@ -46,7 +46,7 @@ There are multiple ways to write to the screen in arm assembly. The first method
 		@basically this backs up the link register
 		push {ip, lr}
 
-		mov r0, addr_message
+		ldr r0, addr_message
 		bl printf	
 
 		@this restore the link register
@@ -56,3 +56,43 @@ There are multiple ways to write to the screen in arm assembly. The first method
 	addr_message: .word message
 
 	.global printf
+	
+#### Whats happening here
+
+Basically, when the printf function is called, it prints to the screen whatever it has stored in r0. r0 is a parameter to the printf function. 
+
+### Printf with parameters
+
+    .data 
+
+	.balign 4
+	message: .asciz "This is how you print the number %d\n"
+	
+	.balign 4
+	number_to_print: .word 10 @we want to print 10 to the screen
+	
+	.text
+	@ Hello World
+	.global main
+	.func main
+	main:
+		@basically this backs up the link register
+		push {ip, lr}
+
+		ldr r0, addr_message		 @load the message into r0
+		ldr r1, addr_number_to_print 	 @load the address of our number into register 1
+		ldr r1, [r1] 			 @Load the actual value of our number into register 1
+		bl printf	
+
+		@this restore the link register
+		pop {ip, pc}
+		bx lr
+
+	addr_message: .word message
+	addr_number_to_print: .word number_to_print
+
+	.global printf
+
+#### Whats happening here
+
+Notice any similarities? In this case, the message required an int, since we added a '%d' in the message. We passed our number 10 as a paramater. 
