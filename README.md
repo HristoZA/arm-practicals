@@ -33,26 +33,26 @@ There are multiple ways to write to the screen in arm assembly. The first method
 		.ascii "Hello World\n"
 		
 ### With printf
-    .data 
-    
-    .balign 4
-    message: .asciz "Hello World\n"
-    
-    .text
-    @ Hello World
-    .global main
-    .func main
-    main:
-    	@basically this backs up the link register
-    	push {ip, lr}
-	
-    	mov r0, addr_message
-	bl printf	
-	
-	@this restore the link register
-	pop {ip, pc}
-	bx lr
-	
-    addr_message: .word message
-    
-    .global printf
+	.data 
+
+	.balign 4
+	message: .asciz "Hello World\n"
+
+	.text
+	@ Hello World
+	.global main
+	.func main
+	main:
+		@basically this backs up the link register
+		push {ip, lr}
+
+		mov r0, addr_message
+		bl printf	
+
+		@this restore the link register
+		pop {ip, pc}
+		bx lr
+
+	addr_message: .word message
+
+	.global printf
