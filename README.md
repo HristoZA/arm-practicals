@@ -1,8 +1,8 @@
 # ARM Assembly Practicals
 
-This will serve as a walkthrough to the assembly practicals for CSC212.
+This will serve as a walkthrough to the assembly practicals for CSC212. I am no expert on the subject, but hopefully this content will help with the new arm module.
 
-I have left out some of practicals 1's questions because they're very bad questions to ask at our skill level, but the others are all do-able. 
+I have left out some of practicals 1's questions because they're very bad questions to ask at our skill level, but the others are all there. 
 
 Some useful links
 
@@ -43,12 +43,16 @@ There are multiple ways to write to the screen in arm assembly. The first method
     .global main
     .func main
     main:
+    	@basically this backs up the link register
     	push {ip, lr}
 	
     	mov r0, addr_message
-	bl printf
+	bl printf	
 	
+	@this restore the link register
 	pop {ip, pc}
+	bx lr
+	
     addr_message: .word message
     
     .global printf
