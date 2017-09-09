@@ -1,6 +1,6 @@
 # ARM Assembly Practicals
 
-This will serve as a walkthrough to the assembly practicals for CSC212. My knowledge of this subject is limited, and these code snippets are just for reference. Feel free to correct me anywhere you see something incorrect. You can do so by makinga pull request (preffered) or by emailing me at [3556336@myuwc.ac.za](mailto:3556336@myuwc.ac.za)
+This will serve as a walkthrough to the assembly practicals for CSC212. My knowledge of this subject is limited, and these code snippets are just for reference. Feel free to correct me anywhere you see something incorrect. You can do so by makinga pull request (preffered) or by emailing me at 3556336 at myuwc.ac.za (replace at with @)
 
 I have left out some of practicals 1's questions because they're very bad questions to ask at our skill level, but the others are all there. 
 
