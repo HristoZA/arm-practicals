@@ -1,4 +1,4 @@
-# ARM Assembly Practicals
+# ARM Assembly Practicals [WIP]
 
 This will serve as a walkthrough to the assembly practicals for CSC212. My knowledge of this subject is limited, and these code snippets are just for reference. 
 
