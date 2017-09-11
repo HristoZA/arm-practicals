@@ -1,6 +1,6 @@
 # ARM Assembly Practicals [WIP]
 
-This will serve as a walkthrough to the assembly practicals for CSC212. My knowledge of this subject is limited, and these code snippets are just for reference. 
+The code below is just for reference. THIS IS NOT A COMPLETE GUIDE. My knowledge of this subject is limited, so please don't take everything here as 100% factually correct. However, the code below does work and should help you solve the practicals. 
 
 Feel free to correct me anywhere you see something incorrect. You can do so by making a pull request (preffered) or by emailing me at 3556336 at myuwc.ac.za (replace at with @)
 
@@ -46,6 +46,32 @@ Some useful links
 		sub r0, r1, r2 @ Store the value of r1 - r2 into r0. r0 = R1 - r2
 
 		bx lr
+
+# Variables
+The way this works is you use memory to store variables and you load the values from memory into a register using the 'ldr' command. We declare these variables under the .data section and then our code must go under the .text section.
+
+## Loading integers from memory.
+	
+	.data
+	
+	.balign 4 
+	number_1: .word 10
+	
+	.balign 4 
+	number_2: .word 15
+		
+	.text
+	.global main
+	main: 
+		
+		ldr r1, =number_1 	 @This gets the addrress of the variable from memory
+		ldr r1, [r1]		 @This gets the actual value from memory so that we can use it to do arithmetic
+		ldr r2, =number2
+		ldr r2, [r2]
+		
+		add r0, r1 , r2 
+		bx lr
+		
 
 # Printing to the screen
 
