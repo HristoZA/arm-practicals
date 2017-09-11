@@ -29,10 +29,10 @@ Some useful links
 	.global main
 	main:
 
-		mov r1, #10 @ store the value 10 into register 1 (r1)
-		mov r2, #15 @ store the value 15 into register 2 (r2)
+		mov r1, #10 		@ store the value 10 into register 1 (r1)
+		mov r2, #15 		@ store the value 15 into register 2 (r2)
 
-		add r0, r1, r2 @ Store the value of r1 + r2 into r0. r0 = R1 + r2
+		add r0, r1, r2 		@ Store the value of r1 + r2 into r0. r0 ⟵ R1 + r2
 
 		bx lr
 		
@@ -41,10 +41,10 @@ Some useful links
 	.global main
 	main:
 
-		mov r1, #20 @ store the value 20 into register 1 (r1)
-		mov r2, #15 @ store the value 15 into register 2 (r2)
+		mov r1, #20 		@ store the value 20 into register 1 (r1)
+		mov r2, #15 		@ store the value 15 into register 2 (r2)
 
-		sub r0, r1, r2 @ Store the value of r1 - r2 into r0. r0 = R1 - r2
+		sub r0, r1, r2 		@ Store the value of r1 - r2 into r0. r0 ⟵ R1 - r2
 
 		bx lr
 
@@ -82,17 +82,17 @@ There are multiple ways to write to the screen in arm assembly. The first method
 
 	.global main
 	main:
-		MOV R7, #4 @ Syscall to output to screen
-		MOV R0,  #1 @ Monitor output stream
-		MOV R2, #12 @ String Length
-		LDR R1, =message @ Load register with address of string
+		MOV R7, #4 		@ Syscall to output to screen
+		MOV R0,  #1 		@ Monitor output stream
+		MOV R2, #12 		@ String Length
+		LDR R1, =message	@ Load register with address of string
 		SWI 0
 
 	end:
-		MOV R7, #1 @ Exit syscall
+		MOV R7, #1 		@ Exit syscall
 		SWI 0
 
-	.data @ Signify that what follows is data
+	.data 				@ Signify that what follows is data
 	message:
 		.ascii "Hello World\n"
 		
@@ -180,6 +180,34 @@ Branching is basically a way of "jumping" over code. For example.
 			bx lr
 			
 What happens here is that `b end` tells the program to branch over to end. So it will ignore the `mov r1, #15` command. Therefore r0 will have a value of 30. 
+
+## Comparisons
+
+Using the `cmp` operation allows you to compare the value of two registers and branch according to the result. 
+
+	.global main
+	main:
+	
+		mov r1, #10			@ r1 ⟵ 10
+		mov r2, #20			@ r2 ⟵ 20
+		
+		cmp r1, r2			@Tells cpu to compare r1 and r2
+		beq equal			@ If r1 = r2, branch to label equal
+		ble less_than			@ if r1 < r2, branch to label less_than
+		bgt greather_than		@ if r1 > r2, branch to label greater than
+		
+		equal: 
+			mov r0, #1
+			b end
+		less_than:
+			mov r0, #2
+			b end
+		bgt greater_than:
+			mov r0, #3
+			b end
+			
+		end: 		
+			bx lr
 
 # Arrays
 
