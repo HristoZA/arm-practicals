@@ -10,6 +10,7 @@ Some useful links
 
 * http://www.newthinktank.com/2016/04/assembly-language-tutorial/
 * http://thinkingeek.com/arm-assembler-raspberry-pi/
+* http://www.utdallas.edu/~pervin/RPiA/RPiA.pdf
 
 # Shortcuts
 
