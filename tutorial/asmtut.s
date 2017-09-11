@@ -1,10 +1,18 @@
 .global main
 	main:
-
-		mov r1, #20 		@ store the value 20 into register 1 (r1)
-		mov r2, #15 		@ store the value 15 into register 2 (r2)
-
-		sub r0, r1, r2 		@ Store the value of r1 - r2 into r0. r0 ⟵ R1 - r2
-
-		bx lr
+	
+		mov r0, #0
+		mov r1, #10
 		
+		b loop
+		
+		loop: 				@ The loop label
+			cmp r0,r1 		@ Compare r0 and r1.
+			beq end			@ if r0 = r1, then branch out of the loop
+			add r0, r0, #1		@ increment r0 by 1
+			b loop			@repeat the loop again.
+			
+		end: 				@ end the program
+		
+			bx lr
+			
