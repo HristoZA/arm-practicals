@@ -98,3 +98,9 @@ Basically, when the printf function is called, it prints to the screen whatever 
 #### Whats happening here
 
 Notice any similarities? In this case, the message required an int, since we added a '%d' in the message. We passed our number 10 as a paramater. 
+
+# Arrays
+
+	LDR R7, =array    ; R7 = array address
+	MOV R8, #0        ; R8 = array index position to store R0 into
+	STR R0, [R7, R8]  ; store R0 into array[R8]
