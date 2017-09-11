@@ -15,7 +15,7 @@ Some useful links
 
 * [Basic arithmetic](#basic-arithmetic)
 * [Variables](#variables)
-* [Printing to screen](#printing-to-screen)
+* [Printing to the screen](#printing-to-the-screen)
 * [Logical 'jumps'.](#)
 * [Functions](#)
 * [Arrays](#arrays)
