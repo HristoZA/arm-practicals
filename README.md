@@ -13,7 +13,7 @@ Some useful links
 
 # Shortcuts
 
-* Basic arithmetic
+* [Basic arithmetic](#basic-arithmetic)
 * Variables
 * Printing to screen
 * Logical 'jumps'.
