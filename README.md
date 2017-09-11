@@ -17,7 +17,7 @@ Some useful links
 * [Basic arithmetic](#basic-arithmetic)
 * [Variables](#variables)
 * [Printing to the screen](#printing-to-the-screen)
-* [Branches and comparisons.](#)
+* [Branches and comparisons.](#Branches-and-comparisons)
 * [Functions](#)
 * [Arrays](#arrays)
 
