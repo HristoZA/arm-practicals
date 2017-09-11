@@ -11,13 +11,48 @@ Some useful links
 * http://www.newthinktank.com/2016/04/assembly-language-tutorial/
 * http://thinkingeek.com/arm-assembler-raspberry-pi/
 
-## Printing to the screen
+# Shortcuts
+
+* Basic arithmetic
+* Variables
+* Printing to screen
+* Logical 'jumps'.
+* Functions
+* Arrays
+
+
+# Basic Arithmetic
+
+## Adding
+	
+	.global main
+	main:
+
+		mov r1, #10 @ store the value 10 into register 1 (r1)
+		mov r2, #15 @ store the value 15 into register 2 (r2)
+
+		add r0, r1, r2 @ Store the value of r1 + r2 into r0. r0 = R1 + r2
+
+		bx lr
+		
+## Subtracting
+
+	.global main
+	main:
+
+		mov r1, #20 @ store the value 20 into register 1 (r1)
+		mov r2, #15 @ store the value 15 into register 2 (r2)
+
+		sub r0, r1, r2 @ Store the value of r1 - r2 into r0. r0 = R1 - r2
+
+		bx lr
+
+# Printing to the screen
 
 There are multiple ways to write to the screen in arm assembly. The first method is with system interupts, and the second is with the C function printf
 
 ### With System Interupts 
 
-    @ Hello World
 	.global main
 	main:
 		MOV R7, #4 @ Syscall to output to screen
@@ -25,16 +60,17 @@ There are multiple ways to write to the screen in arm assembly. The first method
 		MOV R2, #12 @ String Length
 		LDR R1, =message @ Load register with address of string
 		SWI 0
-		
+
 	end:
 		MOV R7, #1 @ Exit syscall
 		SWI 0
-		
+
 	.data @ Signify that what follows is data
 	message:
 		.ascii "Hello World\n"
 		
 ### With printf
+
 	.data 
 
 	.balign 4
