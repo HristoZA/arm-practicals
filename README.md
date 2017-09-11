@@ -77,7 +77,7 @@ The way this works is you use memory to store variables and you load the values 
 
 There are multiple ways to write to the screen in arm assembly. The first method is with system interupts, and the second is with the C function printf
 
-### With System Interupts 
+## With System Interupts 
 
 	.global main
 	main:
@@ -95,7 +95,7 @@ There are multiple ways to write to the screen in arm assembly. The first method
 	message:
 		.ascii "Hello World\n"
 		
-### With printf
+## With printf
 
 	.data 
 
@@ -121,11 +121,11 @@ There are multiple ways to write to the screen in arm assembly. The first method
 
 	.global printf
 	
-#### Whats happening here
+### Whats happening here
 
 Basically, when the printf function is called, it prints to the screen whatever it has stored in r0. r0 is a parameter to the printf function. 
 
-### Printf with parameters
+## Printf with parameters
 
     .data 
 
@@ -157,7 +157,7 @@ Basically, when the printf function is called, it prints to the screen whatever 
 
 	.global printf
 
-#### Whats happening here
+### Whats happening here
 
 Notice any similarities? In this case, the message required an int, since we added a '%d' in the message. We passed our number 10 as a paramater. 
 
