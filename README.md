@@ -16,7 +16,7 @@ Some useful links
 * [Basic arithmetic](#basic-arithmetic)
 * [Variables](#variables)
 * [Printing to the screen](#printing-to-the-screen)
-* [Logical 'jumps'.](#)
+* [Branches and comparisons.](#)
 * [Functions](#)
 * [Arrays](#arrays)
 
@@ -160,6 +160,25 @@ Basically, when the printf function is called, it prints to the screen whatever 
 ### Whats happening here
 
 Notice any similarities? In this case, the message required an int, since we added a '%d' in the message. We passed our number 10 as a paramater. 
+
+# Branches and comparisons
+
+Branching is basically a way of "jumping" over code. For example.
+
+	.global main
+	main:
+
+		mov r1, #10
+		mov r2, #20
+		b end: @ Branch to label named end
+		mov r1, #15 @ This code will never be implemented. 
+
+		end: @ The label 'end'
+		
+			add r0, r1, r2
+			bx lr
+			
+What happens here is that `b end` tells the program to branch over to end. So it will ignore the `mov r1, #15` command. Therefore r0 will have a value of 30. 
 
 # Arrays
 
