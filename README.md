@@ -48,7 +48,7 @@ Some useful links
 		bx lr
 
 # Variables
-The way this works is you use memory to store variables and you load the values from memory into a register using the 'ldr' command. We declare these variables under the .data section and then our code must go under the .text section.
+The way this works is you use memory to store variables and you load the values from memory into a register using the `ldr` operation. We declare these variables under the `.data` section and then our code must go under the `.text`section.
 
 ## Loading integers from memory.
 	
@@ -159,7 +159,7 @@ Basically, when the printf function is called, it prints to the screen whatever 
 
 ### Whats happening here
 
-Notice any similarities? In this case, the message required an int, since we added a '%d' in the message. We passed our number 10 as a paramater. 
+Notice any similarities? In this case, the message required an int, since we added a `%d` in the message. We passed our number 10 as a paramater. 
 
 # Branches and comparisons
 
@@ -170,18 +170,18 @@ Branching is basically a way of "jumping" over code. For example.
 
 		mov r1, #10
 		mov r2, #20
-		b end: @ Branch to label named end
-		mov r1, #15 @ This code will never be implemented. 
+		b end: 		@ Branch to label named end
+		mov r1, #15 	@ This code will never be executed. 
 
-		end: @ The label 'end'
+		end:		@ The label 'end'
 		
-			add r0, r1, r2
+			add r0, r1, r2 @ r0 = r1 + r2. In this case r0 = 10 + 20
 			bx lr
 			
 What happens here is that `b end` tells the program to branch over to end. So it will ignore the `mov r1, #15` command. Therefore r0 will have a value of 30. 
 
 # Arrays
 
-	LDR R7, =array    ; R7 = array address
-	MOV R8, #0        ; R8 = array index position to store R0 into
-	STR R0, [R7, R8]  ; store R0 into array[R8]
+	LDR R7, =array    @ R7 = array address
+	MOV R8, #0        @; R8 = array index position to store R0 into
+	STR R0, [R7, R8]  @ store R0 into array[R8]
