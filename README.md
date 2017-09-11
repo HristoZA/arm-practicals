@@ -211,7 +211,7 @@ Using the `cmp` operation allows you to compare the value of two registers and b
 
 In the above program, r0 contains the value of 2. 
 
-### A for loop using comparisons
+### A loop using comparisons and branching
 	
 	.global main
 	main:
@@ -223,9 +223,9 @@ In the above program, r0 contains the value of 2.
 		
 		loop: 				@ The loop label
 			cmp r0,r1 		@ Compare r0 and r1.
-			beq end:		@ if r0 = r1, then branch out of the loop
+			beq end			@ if r0 = r1, then branch out of the loop
 			add r0, r0, #1		@ increment r0 by 1
-			b loop:			@repeat the loop again.
+			b loop			@repeat the loop again.
 			
 		end: 				@ end the program
 		
