@@ -14,11 +14,11 @@ Some useful links
 # Shortcuts
 
 * [Basic arithmetic](#basic-arithmetic)
-* Variables
-* Printing to screen
-* Logical 'jumps'.
-* Functions
-* Arrays
+* [Variables](#variables)
+* [Printing to screen](#printing-to-screen)
+* [Logical 'jumps'.](#)
+* [Functions](#)
+* [Arrays](#arrays)
 
 
 # Basic Arithmetic
