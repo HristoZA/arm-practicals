@@ -171,7 +171,7 @@ Branching is basically a way of "jumping" over code. For example.
 
 		mov r1, #10
 		mov r2, #20
-		b end: 		@ Branch to label named end
+		b end		@ Branch to label named end
 		mov r1, #15 	@ This code will never be executed. 
 
 		end:		@ The label 'end'
@@ -194,7 +194,7 @@ Using the `cmp` operation allows you to compare the value of two registers and b
 		cmp r1, r2			@Tells cpu to compare r1 and r2
 		beq equal			@ If r1 = r2, branch to label equal
 		ble less_than			@ if r1 < r2, branch to label less_than
-		bgt greather_than		@ if r1 > r2, branch to label greater than
+		bgt greater_than		@ if r1 > r2, branch to label greater than
 		
 		equal: 
 			mov r0, #1
