@@ -230,7 +230,10 @@ In the above program, r0 contains the value of 2.
 		end: 				@ end the program
 		
 			bx lr
-# Arrays
+			
+# Functions (WIP)
+_Coming soon_
+# Arrays (WIP)
 
 	LDR R7, =array    @ R7 = array address
 	MOV R8, #0        @; R8 = array index position to store R0 into
