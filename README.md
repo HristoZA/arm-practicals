@@ -232,7 +232,37 @@ In the above program, r0 contains the value of 2.
 			bx lr
 			
 # Functions (WIP)
-_Coming soon_
+Functions make it easy to split up your code. They take in paramaters (like we've done with printf and scanf), do some work, and output r0. For example:
+	
+	.text
+	add_numbers:
+		@ r1 is number 1
+		@ r2 is number 2
+		
+		push {r1, r2, lr}	@ push r1, r2 onto the stack
+		
+		add r0, r1, r2 		@ functions return r0
+		
+		pop {r1, r2, lr}	@pop r1, r2 from the stack
+		bx lr			@ exit from function
+		
+		
+	.global main
+	main:
+		mov r1, #10		@ number 1
+		mov r2, #20		@ number 2
+		bl add_numbers		
+		
+		/*  think of it like this
+		int add_numbers(int r1, int r2){ 
+			int r0 = r1 + r2; 
+			return r0; 			
+		} */
+		
+		bx lr
+		
+The reason we use `push {r1, r2, lr}` and `pop {r1, r2, lr}` is so that when the function returns, r1 and r2 are restored to what they were before we called the function. 
+	
 # Arrays (WIP)
 
 	LDR R7, =array    @ R7 = array address
