@@ -265,6 +265,29 @@ The reason we use `push {r1, r2, lr}` and `pop {r1, r2, lr}` is so that when the
 	
 # Arrays (WIP)
 
-	LDR R7, =array    @ R7 = array address
-	MOV R8, #0        @; R8 = array index position to store R0 into
-	STR R0, [R7, R8]  @ store R0 into array[R8]
+	.data
+	
+	.align 4
+	arr: .skip 400					@ Create space for an array of size 100
+
+	.text
+	.global main
+	main:
+
+		ldr r1, adr_arr				@ load array into r1
+		mov r2, #0 				@ set r2 to 0 (as a counter)
+
+		loop:
+			cmp r2, #100			@ Compare r2 to size of array
+			beq end				@ if r2 = size of array, branch to end
+			add r3, r2, #1			@ The value to be written at the position r2 in array
+			str r3, [r1, +r2, LSL #2]	@ Store r3 in the base address (r1) + r2 *4
+			add r2, r2, #1			@ increase count of r2 by 1
+
+			b loop				@ Begin loop again
+		end:
+			mov r0, #0			@ Set exit status to 0
+			bx lr				@ Exit the program
+
+
+	adr_arr: .word arr
