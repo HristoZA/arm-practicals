@@ -30,7 +30,7 @@ print_arr:
 	print_loop:
 	
 		cmp r6, r5 
-		beq end
+		beq end_ploop
 		ldr r0, adr_integer_printf
 		ldr r1, [r4, +r6, LSL #2] @ r4 (base adress + r6 *4)
 		bl printf
@@ -39,7 +39,7 @@ print_arr:
 		b print_loop
 	
 	
-	end:
+	end_ploop:
 	
 	ldr r0, adr_newline_printf
 	bl printf
