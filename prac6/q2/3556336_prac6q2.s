@@ -61,24 +61,27 @@ bubble_sort:
 	i_loop:
 		mov r4, #1		@j
 		cmp r3, r1
-		beq bubble_end
+		bgt bubble_end
 		
 		j_loop:
 			cmp r4, r5
-			beq j_end_loop
+			bgt j_end_loop
 			
+			sub r4, r4, #1
 			ldr r6, [r0, +r4, LSL #2]
 			add r4, r4, #1
 			ldr r7, [r0, +r4, LSL #2]
 			cmp r6, r7
-			bgt swap					
+			blt swap					
 			
+			add r4, r4, #1
 			b j_loop
 			
 			swap:
-				str r6, [r0, +r4, LSL #2]
 				sub r4, r4, #1
 				str r7, [r0, +r4, LSL #2]
+				add r4, r4, #1
+				str r6, [r0, +r4, LSL #2]
 				add r4, r4, #1
 				
 				b j_loop
