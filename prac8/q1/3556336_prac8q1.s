@@ -1,11 +1,19 @@
- /* -- create.s -- */
+.data
 
- .text
- .global main @ assemble, link/load, execute this code
-main: @ see Chapter 1 Projects for instructions
+errmsg: .asciz "create failed"
+errmsgend:
+newfile: .asciz "/home/pi/newfile"
+prompt: .asciz "Input a string: \n"
+promptend:
+buffer: .byte 100
+
+.text
+.global main    
+main:
+
  push {r4, lr}
 
- /* OPEN (CREATE) FILE */
+ @ CREATE FILE 
  ldr r0, =newfile
  mov r1, #0x42 @ create R/W
  mov r2, #384 @ = 600 octal (me)
@@ -16,13 +24,6 @@ main: @ see Chapter 1 Projects for instructions
  beq err
 
  mov r4, r0 @ save file_descriptor
-
- /* PROMPT (WRITE) */
- mov r0, #1 @ stdout (monitor)
- ldr r1, =prompt @ address of prompt
- mov r2, #(promptend - prompt) @ length of prompt
- mov r7, #4 @ write
- svc 0
 
  /* READ */
  mov r0, #0 @ stdin (keyboard)
@@ -44,11 +45,14 @@ main: @ see Chapter 1 Projects for instructions
  svc 0
  mov r0, r4 @ return file_descriptor as error code
 
- exit: pop {r4, lr}
+exit: 
+ pop {r4, lr}
  mov r7, #1 @ exit
  svc 0
 
- err: mov r4, r0
+err: 
+
+ mov r4, r0
  mov r0, #1
  ldr r1, =errmsg
  mov r2, #(errmsg - errmsgend)
@@ -58,11 +62,4 @@ main: @ see Chapter 1 Projects for instructions
  mov r0, r4
  b exit
 
- .data
 
- errmsg: .asciz "create failed"
- errmsgend:
- newfile: .asciz "/home/pi/newfile"
- prompt: .asciz "Input a string: \n"
- promptend:
- buffer: .byte 100
