@@ -1,10 +1,10 @@
-rename: rename.o
-	gcc -o rename rename.o
-rename.o: rename.s
-	as -o rename.o rename.s
+3556336_prac8q1: 3556336_prac8q1.o
+	gcc -o 3556336_prac8q1 3556336_prac8q1.o
+3556336_prac8q1.o: 3556336_prac8q1.s
+	as -o 3556336_prac8q1.o 3556336_prac8q1.s
 clean:
-	rm *.o rename
+	rm *.o 3556336_prac8q1
 debug: 
-	as -g -o rename.o rename.s
-	gcc -o rename rename.o    
-	gdb rename
+	as -g -o 3556336_prac8q1.o 3556336_prac8q1.s
+	gcc -o 3556336_prac8q1 3556336_prac8q1.o    
+	gdb 3556336_prac8q1
