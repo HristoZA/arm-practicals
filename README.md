@@ -4,7 +4,7 @@ The code below is just for reference. THIS IS NOT A COMPLETE GUIDE. My knowledge
 
 Feel free to correct me anywhere you see something incorrect. You can do so by making a pull request (preffered) or by emailing me at 3556336 at myuwc.ac.za (replace at with @)
 
-I have left out some of practicals 1's questions because they're very bad questions to ask at our skill level, but the others are all there. 
+I have left out some of practicals 1's questions because they're bad questions to ask at our skill level, but the others are all there. 
 
 Some useful links
 
